@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import SNAPSHOT_DATA from './data/snapshot.json';
 import {
   Calendar,
   Clock,
@@ -88,92 +89,8 @@ function formatMinutes(min) {
   return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
-// Initial fallback state matching verified CP-SAT run
-const INITIAL_FALLBACK = {
-  status: "OPTIMAL",
-  tasks: [
-    { id: "E1", department: "Engineering", section_id: "A", duration_minutes: 45, criticality: 5, due_date: "2026-09-01", status: "pending", description: "Rail joint welding & USFD flaw detection (TPJ-SRGM)" },
-    { id: "S1", department: "S&T", section_id: "A", duration_minutes: 30, criticality: 5, due_date: "2026-09-01", status: "pending", description: "Point machine & track circuit calibration (SRGM Yard)" },
-    { id: "T1", department: "TRD", section_id: "A", duration_minutes: 40, criticality: 5, due_date: "2026-09-01", status: "pending", description: "25kV OHE cantilever replacement & power isolation" },
-    { id: "E2", department: "Engineering", section_id: "A", duration_minutes: 60, criticality: 4, due_date: "2026-08-25", status: "pending", description: "Deep screening & sleeper renewal (KM 338/10-14)" },
-    { id: "S2", department: "S&T", section_id: "B", duration_minutes: 25, criticality: 3, due_date: "2026-09-02", status: "pending", description: "Axle counter sensor replacement & signal alignment (GOC)" },
-    { id: "E3", department: "Engineering", section_id: "B", duration_minutes: 50, criticality: 3, due_date: "2026-09-02", status: "pending", description: "Ballast tamping & track alignment adjustment" },
-    { id: "T2", department: "TRD", section_id: "B", duration_minutes: 35, criticality: 2, due_date: "2026-09-03", status: "pending", description: "OHE contact wire tensioning & isolator check" },
-    { id: "E4", department: "Engineering", section_id: "C", duration_minutes: 40, criticality: 2, due_date: "2026-09-04", status: "pending", description: "Switch expansion joint (SEJ) lubrication & bolt tightening" },
-    { id: "S3", department: "S&T", section_id: "C", duration_minutes: 20, criticality: 1, due_date: "2026-09-04", status: "pending", description: "Block instrument routine inspection & battery bank test" }
-  ],
-  windows: [
-    { id: "W-A-morning", section_id: "A", start_time: 360, end_time: 600, source: "derived_from_timetable" },
-    { id: "W-B-morning", section_id: "B", start_time: 480, end_time: 720, source: "derived_from_timetable" },
-    { id: "W-C-morning", section_id: "C", start_time: 600, end_time: 840, source: "derived_from_timetable" }
-  ],
-  schedule: [
-    { task_id: "E1", assigned_window_id: "W-A-morning", start_minute: 360, end_minute: 405, bundle_group_id: "BUNDLE-A-360" },
-    { task_id: "S1", assigned_window_id: "W-A-morning", start_minute: 360, end_minute: 390, bundle_group_id: "BUNDLE-A-360" },
-    { task_id: "T1", assigned_window_id: "W-A-morning", start_minute: 420, end_minute: 460, bundle_group_id: null },
-    { task_id: "E2", assigned_window_id: "W-A-morning", start_minute: 360, end_minute: 420, bundle_group_id: "BUNDLE-A-360" },
-    { task_id: "S2", assigned_window_id: "W-B-morning", start_minute: 480, end_minute: 505, bundle_group_id: "BUNDLE-B-480" },
-    { task_id: "E3", assigned_window_id: "W-B-morning", start_minute: 480, end_minute: 530, bundle_group_id: "BUNDLE-B-480" },
-    { task_id: "T2", assigned_window_id: "W-B-morning", start_minute: 530, end_minute: 565, bundle_group_id: null },
-    { task_id: "E4", assigned_window_id: "W-C-morning", start_minute: 600, end_minute: 640, bundle_group_id: "BUNDLE-C-600" },
-    { task_id: "S3", assigned_window_id: "W-C-morning", start_minute: 600, end_minute: 620, bundle_group_id: "BUNDLE-C-600" }
-  ],
-  baseline_schedule: [
-    { task_id: "E1", assigned_window_id: "W-A-morning", start_minute: 360, end_minute: 405, bundle_group_id: null },
-    { task_id: "S1", assigned_window_id: "W-A-morning", start_minute: 405, end_minute: 435, bundle_group_id: null },
-    { task_id: "T1", assigned_window_id: "W-A-morning", start_minute: 435, end_minute: 475, bundle_group_id: null },
-    { task_id: "E2", assigned_window_id: "W-A-morning", start_minute: 360, end_minute: 420, bundle_group_id: null },
-    { task_id: "T2", assigned_window_id: "W-B-morning", start_minute: 480, end_minute: 515, bundle_group_id: null },
-    { task_id: "S2", assigned_window_id: "W-B-morning", start_minute: 515, end_minute: 540, bundle_group_id: null },
-    { task_id: "E3", assigned_window_id: "W-B-morning", start_minute: 540, end_minute: 590, bundle_group_id: null },
-    { task_id: "E4", assigned_window_id: "W-C-morning", start_minute: 600, end_minute: 640, bundle_group_id: null },
-    { task_id: "S3", assigned_window_id: "W-C-morning", start_minute: 640, end_minute: 660, bundle_group_id: null }
-  ],
-  metrics: {
-    total_tasks_scheduled: 9,
-    total_blocks_used: 5,
-    total_downtime_minutes: 225,
-    bundled_task_pairs: 4,
-    conflicts_resolved: 5,
-    criticality_weighted_ontime: 26,
-    overdue_tasks_remaining: 1,
-    schedule_utilization: 0.625
-  },
-  baseline_metrics: {
-    total_tasks_scheduled: 9,
-    total_blocks_used: 9,
-    total_downtime_minutes: 345,
-    bundled_task_pairs: 0,
-    conflicts_resolved: 5,
-    criticality_weighted_ontime: 26,
-    overdue_tasks_remaining: 1,
-    schedule_utilization: 0.958
-  },
-  explanations: [
-    { schedule_entry_id: "E1", reason_text: "Scheduled in Window W-A-morning (360-405m) and bundled with S1, E2 on Tiruchirappalli Jn – Srirangam due to compatible Engineering operations.", constraint_involved: "synergy_bundling", conflict_avoided: "T1", synergy_captured: ["S1", "E2"] },
-    { schedule_entry_id: "S1", reason_text: "Scheduled in Window W-A-morning (360-390m) and bundled with E1, E2 on Tiruchirappalli Jn – Srirangam due to compatible S&T operations.", constraint_involved: "synergy_bundling", conflict_avoided: "T1", synergy_captured: ["E1", "E2"] },
-    { schedule_entry_id: "T1", reason_text: "Scheduled in Window W-A-morning (420-460m) separately from conflicting task(s) [E1, S1, E2] on Tiruchirappalli Jn – Srirangam due to power isolation requirements.", constraint_involved: "power_isolation_conflict", conflict_avoided: "E1", synergy_captured: null },
-    { schedule_entry_id: "E2", reason_text: "Scheduled in Window W-A-morning (360-420m) and bundled with S1, E1 on Tiruchirappalli Jn – Srirangam due to compatible Engineering operations.", constraint_involved: "synergy_bundling", conflict_avoided: "T1", synergy_captured: ["S1", "E1"] },
-    { schedule_entry_id: "S2", reason_text: "Scheduled in Window W-B-morning (480-505m) and bundled with E3 on Tiruchirappalli Jn – Golden Rock due to compatible S&T operations.", constraint_involved: "synergy_bundling", conflict_avoided: "T2", synergy_captured: ["E3"] },
-    { schedule_entry_id: "E3", reason_text: "Scheduled in Window W-B-morning (480-530m) and bundled with S2 on Tiruchirappalli Jn – Golden Rock due to compatible Engineering operations.", constraint_involved: "synergy_bundling", conflict_avoided: "T2", synergy_captured: ["S2"] },
-    { schedule_entry_id: "T2", reason_text: "Scheduled in Window W-B-morning (530-565m) separately from conflicting task(s) [S2, E3] on Tiruchirappalli Jn – Golden Rock due to power isolation requirements.", constraint_involved: "power_isolation_conflict", conflict_avoided: "S2", synergy_captured: null },
-    { schedule_entry_id: "E4", reason_text: "Scheduled in Window W-C-morning (600-640m) and bundled with S3 on Tiruchirappalli Jn – Karur Jn due to compatible Engineering operations.", constraint_involved: "synergy_bundling", conflict_avoided: null, synergy_captured: ["S3"] },
-    { schedule_entry_id: "S3", reason_text: "Scheduled in Window W-C-morning (600-620m) and bundled with E4 on Tiruchirappalli Jn – Karur Jn due to compatible S&T operations.", constraint_involved: "synergy_bundling", conflict_avoided: null, synergy_captured: ["E4"] }
-  ],
-  conflicts: [
-    { task_id_1: "E1", task_id_2: "T1", reason: "TRD Power Isolation Conflict" },
-    { task_id_1: "S1", task_id_2: "T1", reason: "TRD Power Isolation Conflict" },
-    { task_id_1: "T1", task_id_2: "E2", reason: "TRD Power Isolation Conflict" },
-    { task_id_1: "S2", task_id_2: "T2", reason: "TRD Power Isolation Conflict" },
-    { task_id_1: "E3", task_id_2: "T2", reason: "TRD Power Isolation Conflict" }
-  ],
-  synergies: [
-    { task_id_1: "E1", task_id_2: "S1", reason: "Engineering & S&T Co-location Synergy" },
-    { task_id_1: "S1", task_id_2: "E2", reason: "Engineering & S&T Co-location Synergy" },
-    { task_id_1: "S2", task_id_2: "E3", reason: "Engineering & S&T Co-location Synergy" },
-    { task_id_1: "E4", task_id_2: "S3", reason: "Engineering & S&T Co-location Synergy" }
-  ]
-};
+// Initial fallback state matching verified CP-SAT run snapshot
+const INITIAL_FALLBACK = SNAPSHOT_DATA;
 
 const FALLBACK_PROVENANCE = {
   status: "healthy",
@@ -230,10 +147,10 @@ const FALLBACK_PROVENANCE = {
 };
 
 const SEEDED_LOGINS = [
-  { username: 'coordinator_desk', role: 'coordinator', label: 'Chief Coordinator Desk', dept: 'Central Traffic Control', pass: 'coordinator123', color: 'border-l-[#1F3864]' },
-  { username: 'engineering_desk', role: 'Engineering', label: 'Civil Engineering Desk', dept: 'Track & Works', pass: 'engineer123', color: 'border-l-[#0070C0]' },
-  { username: 'snt_desk', role: 'S&T', label: 'Signal & Telecom Desk', dept: 'Interlocking & Points', pass: 'snt123', color: 'border-l-[#548235]' },
-  { username: 'trd_desk', role: 'TRD', label: 'Traction Distribution Desk', dept: 'OHE & Power Isolation', pass: 'trd123', color: 'border-l-[#ED7D31]' },
+  { username: 'coordinator_desk', role: 'coordinator', label: 'Chief Coordinator Desk', dept: 'Central Traffic Control', color: 'border-l-[#1F3864]' },
+  { username: 'engineering_desk', role: 'Engineering', label: 'Civil Engineering Desk', dept: 'Track & Works', color: 'border-l-[#0070C0]' },
+  { username: 'snt_desk', role: 'S&T', label: 'Signal & Telecom Desk', dept: 'Interlocking & Points', color: 'border-l-[#548235]' },
+  { username: 'trd_desk', role: 'TRD', label: 'Traction Distribution Desk', dept: 'OHE & Power Isolation', color: 'border-l-[#ED7D31]' },
 ];
 
 // ─── Corridor-Line Header Motif Component ─────────────────────────────────────
@@ -568,11 +485,11 @@ function DataSourcesPopover({ isOpen, onClose, provenanceData, isBackendConnecte
                 <span className={`relative inline-flex rounded-full h-2 w-2 ${isBackendConnected ? 'bg-emerald-500' : 'bg-amber-500'}`}></span>
               </span>
               <span className={`font-bold ${isBackendConnected ? 'text-emerald-700' : 'text-amber-800'}`}>
-                {isBackendConnected ? '4/4 Datasets Live & Synchronized' : '4/4 Datasets Loaded (Offline Cache)'}
+                {isBackendConnected ? '4/4 Datasets Live & Synchronized' : '4/4 Datasets Loaded (Verified Offline Snapshot)'}
               </span>
             </div>
             <span className="text-[11px] text-slate-500 font-mono">
-              {isBackendConnected ? 'FastAPI Connected' : 'Offline Mode'}
+              {isBackendConnected ? 'FastAPI Connected' : 'Offline Snapshot'}
             </span>
           </div>
 
@@ -732,8 +649,9 @@ export default function App() {
         setIsBackendConnected(true);
       }
     } catch (err) {
-      console.warn('Backend offline, using verified fallback data.', err);
+      console.warn('Backend offline, using verified snapshot data.', err);
       setIsBackendConnected(false);
+      setData(SNAPSHOT_DATA);
     } finally {
       setLoading(false);
     }
@@ -780,7 +698,7 @@ export default function App() {
     fetchDecisions();
   }, []);
 
-  // Login handler
+  // Login handler — authenticates against real backend
   const handleLogin = async (e) => {
     if (e) e.preventDefault();
     setLoginError(null);
@@ -797,7 +715,7 @@ export default function App() {
       });
 
       if (!res.ok) {
-        const errJson = await res.json();
+        const errJson = await res.json().catch(() => ({}));
         throw new Error(errJson.detail || 'Authentication failed');
       }
 
@@ -806,20 +724,8 @@ export default function App() {
       localStorage.setItem('blocksync_user', JSON.stringify(session));
       setActiveTab(session.role === 'coordinator' ? 'schedule' : 'requester_submit');
     } catch (err) {
-      const found = SEEDED_LOGINS.find(
-        a => a.username === loginForm.username.trim() && a.pass === loginForm.password
-      );
-      if (found) {
-        const fallbackSession = {
-          token: `session_${found.username}_offline`,
-          username: found.username,
-          role: found.role,
-          department_name: found.dept,
-          message: 'Offline login successful'
-        };
-        setCurrentUser(fallbackSession);
-        localStorage.setItem('blocksync_user', JSON.stringify(fallbackSession));
-        setActiveTab(found.role === 'coordinator' ? 'schedule' : 'requester_submit');
+      if (!isBackendConnected || err.message?.includes('fetch') || err.name === 'TypeError') {
+        setLoginError('Backend server is offline. Select a desk on the left to enter an offline demo session.');
       } else {
         setLoginError(err.message || 'Invalid username or password.');
       }
@@ -828,9 +734,22 @@ export default function App() {
     }
   };
 
-  const handleQuickLogin = (acc) => {
-    setLoginForm({ username: acc.username, password: acc.pass });
+  // Offline desk picker — zero passwords, unauthenticated local demo session
+  const handleSelectDesk = (acc) => {
+    setLoginForm(prev => ({ ...prev, username: acc.username }));
     setLoginError(null);
+    if (!isBackendConnected) {
+      const offlineSession = {
+        token: `session_${acc.username}_offline`,
+        username: acc.username,
+        role: acc.role,
+        department_name: acc.dept,
+        message: 'Offline demo session. Not authenticated. Nothing is saved.'
+      };
+      setCurrentUser(offlineSession);
+      localStorage.setItem('blocksync_user', JSON.stringify(offlineSession));
+      setActiveTab(acc.role === 'coordinator' ? 'schedule' : 'requester_submit');
+    }
   };
 
   const handleLogout = () => {
@@ -1112,6 +1031,12 @@ export default function App() {
             </h2>
 
             <div className="space-y-3 pt-1">
+              {/* Offline Demo Session Disclaimer */}
+              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium flex items-center gap-2">
+                <AlertCircle className="w-4 h-4 text-[#ED7D31] shrink-0" />
+                <span>Offline demo session. Not authenticated. Nothing is saved.</span>
+              </div>
+
               {/* Group 1: Coordinator Access */}
               <div className="bg-white p-3.5 rounded-lg border border-[#E2E8F0] space-y-2">
                 <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
@@ -1125,7 +1050,7 @@ export default function App() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => handleQuickLogin(SEEDED_LOGINS[0])}
+                  onClick={() => handleSelectDesk(SEEDED_LOGINS[0])}
                   className="w-full p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 border-l-[#1F3864] border border-[#E2E8F0] rounded-lg transition duration-200 flex items-center justify-between cursor-pointer"
                 >
                   <div>
@@ -1154,7 +1079,7 @@ export default function App() {
                     <button
                       key={acc.username}
                       type="button"
-                      onClick={() => handleQuickLogin(acc)}
+                      onClick={() => handleSelectDesk(acc)}
                       className={`p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 ${acc.color} border border-[#E2E8F0] rounded-lg transition duration-200 cursor-pointer flex flex-col justify-between`}
                     >
                       <div>
@@ -1376,9 +1301,9 @@ export default function App() {
             <div className="flex items-center gap-2.5">
               <AlertTriangle className="w-4 h-4 text-[#ED7D31] shrink-0" />
               <div>
-                <span className="font-bold">Backend Server Offline (FastAPI at {API_BASE || 'http://127.0.0.1:8000'} unreachable):</span>
+                <span className="font-bold">Backend not running.</span>
                 <span className="ml-1 text-amber-800">
-                  Operating in offline fallback mode with verified CP-SAT dataset. Live solver re-optimization and database sync are paused.
+                  Showing a recorded snapshot from {data.generated_at || 'verified export'}. Re-optimization needs the backend (start it with: <code className="bg-amber-100 text-amber-900 font-mono px-1 py-0.5 rounded font-bold">./start.sh</code>).
                 </span>
               </div>
             </div>

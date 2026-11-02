@@ -28,17 +28,31 @@ Constraint-optimization engine (OR-Tools CP-SAT) that jointly schedules railway 
 
 ## ⚡ Quick Start
 
-Follow these copy-paste commands to run the backend solver and interactive dashboard locally:
+### One-Command Start (macOS & Linux)
 
-### Prerequisites
-- Python 3.10+
-- Node.js 18+ and npm
+Clone and launch both the backend solver and interactive dashboard with a single command:
 
-### 1. Install & Run Backend
 ```bash
 git clone https://github.com/srivarsan007/blocksync.git
 cd blocksync
 
+# Set up virtual environment and dependencies once
+python3 -m venv venv
+./venv/bin/pip install -r requirements-dev.txt
+(cd frontend && npm install)
+
+# One command starts FastAPI backend (port 8000) and Vite frontend (port 5173)
+./start.sh
+```
+
+*(You can also run `npm run start:all` from inside `frontend/`)*
+
+---
+
+### Manual Step-by-Step Start
+
+#### 1. Install & Run Backend
+```bash
 # Set up Python virtual environment
 python3 -m venv venv
 source venv/bin/activate
@@ -46,14 +60,16 @@ source venv/bin/activate
 # Install runtime and testing dependencies
 pip install -r requirements-dev.txt
 
-# Run test suite (21 automated unit, integration, and security tests)
+# Run test suite (23 automated unit, integration, security, and snapshot drift tests)
 PYTHONPATH=. venv/bin/pytest tests/ -v
 
 # Start FastAPI backend server (http://127.0.0.1:8000)
+export BLOCKSYNC_DEMO_MODE=true
+export PYJWT_SECRET=$(python3 -c "import secrets; print(secrets.token_urlsafe(32))")
 python3 -m uvicorn backend.main:app --port 8000 --host 127.0.0.1
 ```
 
-### 2. Run Frontend Dashboard
+#### 2. Run Frontend Dashboard
 ```bash
 # In a new terminal window:
 cd blocksync/frontend
@@ -176,5 +192,8 @@ Copyright © 2026 Srivarsan K V.
 ## 🙏 Acknowledgements
 
 - **Timetable Dataset**: Ministry of Railways via [data.gov.in](https://data.gov.in/resource/indian-railways-train-time-table) (Open Government Data Platform India), licensed under the [Government Open Data License - India (GODL-India)](https://data.gov.in/government-open-data-license-india).
+- **Typefaces**:
+  - [Inter](https://github.com/rsms/inter) by Rasmus Andersson, self-hosted and licensed under the [SIL Open Font License 1.1](frontend/public/fonts/OFL.txt).
+  - [JetBrains Mono](https://github.com/JetBrains/JetBrainsMono) by JetBrains s.r.o., self-hosted and licensed under the [SIL Open Font License 1.1](frontend/public/fonts/OFL.txt).
 - **Core Open-Source Libraries**: Google OR-Tools CP-SAT, FastAPI, Scikit-Learn, NetworkX, React, Vite, and Tailwind CSS.
 - **AI Coding Assistance**: AI coding tools were used in developing and refining portions of this project.

@@ -1,0 +1,548 @@
+{
+  "generated_at": "2026-11-02T03:16:01Z",
+  "dataset_hash": "sha256:a78874bdfd58b5554e80cb9aa7227aa16152b5c2ab4c3f01f6a9a754394b89fe",
+  "status": "OPTIMAL",
+  "objective_value": 344.0,
+  "tasks": [
+    {
+      "id": "E1",
+      "department": "Engineering",
+      "section_id": "A",
+      "duration_minutes": 45,
+      "criticality": 5,
+      "due_date": "2026-09-01",
+      "status": "pending",
+      "description": "Rail joint welding & USFD flaw detection (TPJ-SRGM)",
+      "ml_priority_score": 11.16,
+      "effective_priority": 11
+    },
+    {
+      "id": "S1",
+      "department": "S&T",
+      "section_id": "A",
+      "duration_minutes": 30,
+      "criticality": 5,
+      "due_date": "2026-09-01",
+      "status": "pending",
+      "description": "Point machine & track circuit calibration (SRGM Yard)",
+      "ml_priority_score": 11.15,
+      "effective_priority": 11
+    },
+    {
+      "id": "T1",
+      "department": "TRD",
+      "section_id": "A",
+      "duration_minutes": 40,
+      "criticality": 5,
+      "due_date": "2026-09-01",
+      "status": "pending",
+      "description": "25kV OHE cantilever replacement & power isolation",
+      "ml_priority_score": 11.16,
+      "effective_priority": 11
+    },
+    {
+      "id": "E2",
+      "department": "Engineering",
+      "section_id": "A",
+      "duration_minutes": 60,
+      "criticality": 4,
+      "due_date": "2026-08-25",
+      "status": "pending",
+      "description": "Deep screening & sleeper renewal (KM 338/10-14)",
+      "ml_priority_score": 12.44,
+      "effective_priority": 12
+    },
+    {
+      "id": "S2",
+      "department": "S&T",
+      "section_id": "B",
+      "duration_minutes": 25,
+      "criticality": 3,
+      "due_date": "2026-09-02",
+      "status": "pending",
+      "description": "Axle counter sensor replacement & signal alignment (GOC)",
+      "ml_priority_score": 7.49,
+      "effective_priority": 7
+    },
+    {
+      "id": "E3",
+      "department": "Engineering",
+      "section_id": "B",
+      "duration_minutes": 50,
+      "criticality": 3,
+      "due_date": "2026-09-02",
+      "status": "pending",
+      "description": "Ballast tamping & track alignment adjustment",
+      "ml_priority_score": 7.5,
+      "effective_priority": 7
+    },
+    {
+      "id": "T2",
+      "department": "TRD",
+      "section_id": "B",
+      "duration_minutes": 35,
+      "criticality": 2,
+      "due_date": "2026-09-03",
+      "status": "pending",
+      "description": "OHE contact wire tensioning & isolator check",
+      "ml_priority_score": 5.75,
+      "effective_priority": 6
+    },
+    {
+      "id": "E4",
+      "department": "Engineering",
+      "section_id": "C",
+      "duration_minutes": 40,
+      "criticality": 2,
+      "due_date": "2026-09-04",
+      "status": "pending",
+      "description": "Switch expansion joint (SEJ) lubrication & bolt tightening",
+      "ml_priority_score": 5.75,
+      "effective_priority": 6
+    },
+    {
+      "id": "S3",
+      "department": "S&T",
+      "section_id": "C",
+      "duration_minutes": 20,
+      "criticality": 1,
+      "due_date": "2026-09-04",
+      "status": "pending",
+      "description": "Block instrument routine inspection & battery bank test",
+      "ml_priority_score": 4.09,
+      "effective_priority": 4
+    }
+  ],
+  "windows": [
+    {
+      "id": "W-A-morning",
+      "section_id": "A",
+      "start_time": 360,
+      "end_time": 600,
+      "source": "derived_from_timetable"
+    },
+    {
+      "id": "W-B-morning",
+      "section_id": "B",
+      "start_time": 480,
+      "end_time": 720,
+      "source": "derived_from_timetable"
+    },
+    {
+      "id": "W-C-morning",
+      "section_id": "C",
+      "start_time": 600,
+      "end_time": 840,
+      "source": "derived_from_timetable"
+    }
+  ],
+  "schedule": [
+    {
+      "task_id": "E1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 405,
+      "bundle_group_id": "BUNDLE-A-360"
+    },
+    {
+      "task_id": "S1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 390,
+      "bundle_group_id": "BUNDLE-A-360"
+    },
+    {
+      "task_id": "T1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 420,
+      "end_minute": 460,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "E2",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 420,
+      "bundle_group_id": "BUNDLE-A-360"
+    },
+    {
+      "task_id": "S2",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 480,
+      "end_minute": 505,
+      "bundle_group_id": "BUNDLE-B-480"
+    },
+    {
+      "task_id": "E3",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 480,
+      "end_minute": 530,
+      "bundle_group_id": "BUNDLE-B-480"
+    },
+    {
+      "task_id": "T2",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 530,
+      "end_minute": 565,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "E4",
+      "assigned_window_id": "W-C-morning",
+      "start_minute": 600,
+      "end_minute": 640,
+      "bundle_group_id": "BUNDLE-C-600"
+    },
+    {
+      "task_id": "S3",
+      "assigned_window_id": "W-C-morning",
+      "start_minute": 600,
+      "end_minute": 620,
+      "bundle_group_id": "BUNDLE-C-600"
+    }
+  ],
+  "baseline_schedule": [
+    {
+      "task_id": "E2",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 420,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "E1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 405,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "S1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 360,
+      "end_minute": 390,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "T1",
+      "assigned_window_id": "W-A-morning",
+      "start_minute": 420,
+      "end_minute": 460,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "S2",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 480,
+      "end_minute": 505,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "E3",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 480,
+      "end_minute": 530,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "T2",
+      "assigned_window_id": "W-B-morning",
+      "start_minute": 530,
+      "end_minute": 565,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "E4",
+      "assigned_window_id": "W-C-morning",
+      "start_minute": 600,
+      "end_minute": 640,
+      "bundle_group_id": null
+    },
+    {
+      "task_id": "S3",
+      "assigned_window_id": "W-C-morning",
+      "start_minute": 600,
+      "end_minute": 620,
+      "bundle_group_id": null
+    }
+  ],
+  "metrics": {
+    "total_tasks_scheduled": 9,
+    "total_blocks_used": 5,
+    "total_downtime_minutes": 225,
+    "bundled_task_pairs": 4,
+    "conflicts_resolved": 5,
+    "criticality_weighted_ontime": 26,
+    "overdue_tasks_remaining": 1,
+    "schedule_utilization": 0.312
+  },
+  "baseline_metrics": {
+    "total_tasks_scheduled": 9,
+    "total_blocks_used": 9,
+    "total_downtime_minutes": 345,
+    "bundled_task_pairs": 0,
+    "conflicts_resolved": 5,
+    "criticality_weighted_ontime": 26,
+    "overdue_tasks_remaining": 1,
+    "schedule_utilization": 0.479
+  },
+  "explanations": [
+    {
+      "schedule_entry_id": "E1",
+      "reason_text": "Scheduled in Window W-A-morning (360-405m) and bundled with S1 on Section A due to compatible Engineering operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": "T1",
+      "synergy_captured": [
+        "S1"
+      ]
+    },
+    {
+      "schedule_entry_id": "S1",
+      "reason_text": "Scheduled in Window W-A-morning (360-390m) and bundled with E1, E2 on Section A due to compatible S&T operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": "T1",
+      "synergy_captured": [
+        "E1",
+        "E2"
+      ]
+    },
+    {
+      "schedule_entry_id": "T1",
+      "reason_text": "Scheduled in Window W-A-morning (420-460m) separately from conflicting task(s) [E1, S1, E2] on Section A due to power isolation requirements.",
+      "constraint_involved": "power_isolation_conflict",
+      "conflict_avoided": "E1",
+      "synergy_captured": null
+    },
+    {
+      "schedule_entry_id": "E2",
+      "reason_text": "Scheduled in Window W-A-morning (360-420m) and bundled with S1 on Section A due to compatible Engineering operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": "T1",
+      "synergy_captured": [
+        "S1"
+      ]
+    },
+    {
+      "schedule_entry_id": "S2",
+      "reason_text": "Scheduled in Window W-B-morning (480-505m) and bundled with E3 on Section B due to compatible S&T operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": "T2",
+      "synergy_captured": [
+        "E3"
+      ]
+    },
+    {
+      "schedule_entry_id": "E3",
+      "reason_text": "Scheduled in Window W-B-morning (480-530m) and bundled with S2 on Section B due to compatible Engineering operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": "T2",
+      "synergy_captured": [
+        "S2"
+      ]
+    },
+    {
+      "schedule_entry_id": "T2",
+      "reason_text": "Scheduled in Window W-B-morning (530-565m) separately from conflicting task(s) [S2, E3] on Section B due to power isolation requirements.",
+      "constraint_involved": "power_isolation_conflict",
+      "conflict_avoided": "S2",
+      "synergy_captured": null
+    },
+    {
+      "schedule_entry_id": "E4",
+      "reason_text": "Scheduled in Window W-C-morning (600-640m) and bundled with S3 on Section C due to compatible Engineering operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": null,
+      "synergy_captured": [
+        "S3"
+      ]
+    },
+    {
+      "schedule_entry_id": "S3",
+      "reason_text": "Scheduled in Window W-C-morning (600-620m) and bundled with E4 on Section C due to compatible S&T operations.",
+      "constraint_involved": "synergy_bundling",
+      "conflict_avoided": null,
+      "synergy_captured": [
+        "E4"
+      ]
+    }
+  ],
+  "conflicts": [
+    {
+      "task_id_1": "E1",
+      "task_id_2": "T1",
+      "reason": "TRD Power Isolation Conflict"
+    },
+    {
+      "task_id_1": "S1",
+      "task_id_2": "T1",
+      "reason": "TRD Power Isolation Conflict"
+    },
+    {
+      "task_id_1": "T1",
+      "task_id_2": "E2",
+      "reason": "TRD Power Isolation Conflict"
+    },
+    {
+      "task_id_1": "S2",
+      "task_id_2": "T2",
+      "reason": "TRD Power Isolation Conflict"
+    },
+    {
+      "task_id_1": "E3",
+      "task_id_2": "T2",
+      "reason": "TRD Power Isolation Conflict"
+    }
+  ],
+  "synergies": [
+    {
+      "task_id_1": "E1",
+      "task_id_2": "S1",
+      "reason": "Engineering & S&T Co-location Synergy"
+    },
+    {
+      "task_id_1": "S1",
+      "task_id_2": "E2",
+      "reason": "Engineering & S&T Co-location Synergy"
+    },
+    {
+      "task_id_1": "S2",
+      "task_id_2": "E3",
+      "reason": "Engineering & S&T Co-location Synergy"
+    },
+    {
+      "task_id_1": "E4",
+      "task_id_2": "S3",
+      "reason": "Engineering & S&T Co-location Synergy"
+    }
+  ],
+  "ml_metadata": {
+    "metrics": {
+      "mae": 0.2232,
+      "mse": 0.0816,
+      "r2_score": 0.9902,
+      "test_samples": 240,
+      "train_samples": 960
+    },
+    "feature_importances": {
+      "criticality": 0.6626663190021,
+      "days_overdue": 0.3337086552893907,
+      "duration_minutes": 0.003534217437030667,
+      "dept_risk": 9.080827147862056e-05
+    },
+    "metadata": {
+      "model_type": "RandomForestRegressor (scikit-learn)",
+      "n_estimators": 100,
+      "max_depth": 5,
+      "features_used": [
+        "criticality",
+        "days_overdue",
+        "dept_risk",
+        "duration_minutes"
+      ],
+      "training_source": "synthetic_documented_formula",
+      "last_trained": "2026-11-02 08:46:01"
+    }
+  },
+  "ml_explanations": [
+    {
+      "task_id": "E1",
+      "ml_priority_score": 11.16,
+      "effective_priority": 11,
+      "primary_driver": "Criticality",
+      "factors": [
+        "Base Criticality: 5/5",
+        "Engineering Dept Risk Weight (1.20x)"
+      ],
+      "summary": "Task E1 (Engineering) assigned ML Priority 11.16 driven by Base Criticality: 5/5"
+    },
+    {
+      "task_id": "S1",
+      "ml_priority_score": 11.15,
+      "effective_priority": 11,
+      "primary_driver": "Criticality",
+      "factors": [
+        "Base Criticality: 5/5",
+        "S&T Dept Risk Weight (1.10x)"
+      ],
+      "summary": "Task S1 (S&T) assigned ML Priority 11.15 driven by Base Criticality: 5/5"
+    },
+    {
+      "task_id": "T1",
+      "ml_priority_score": 11.16,
+      "effective_priority": 11,
+      "primary_driver": "Criticality",
+      "factors": [
+        "Base Criticality: 5/5",
+        "TRD Dept Risk Weight (1.30x)"
+      ],
+      "summary": "Task T1 (TRD) assigned ML Priority 11.16 driven by Base Criticality: 5/5"
+    },
+    {
+      "task_id": "E2",
+      "ml_priority_score": 12.44,
+      "effective_priority": 12,
+      "primary_driver": "Overdue Delay",
+      "factors": [
+        "Base Criticality: 4/5",
+        "Overdue by 7 days (+3.1 priority)",
+        "Engineering Dept Risk Weight (1.20x)"
+      ],
+      "summary": "Task E2 (Engineering) assigned ML Priority 12.44 driven by Base Criticality: 4/5, Overdue by 7 days (+3.1 priority)"
+    },
+    {
+      "task_id": "S2",
+      "ml_priority_score": 7.49,
+      "effective_priority": 7,
+      "primary_driver": "Department Risk",
+      "factors": [
+        "Base Criticality: 3/5",
+        "S&T Dept Risk Weight (1.10x)"
+      ],
+      "summary": "Task S2 (S&T) assigned ML Priority 7.49 driven by Base Criticality: 3/5"
+    },
+    {
+      "task_id": "E3",
+      "ml_priority_score": 7.5,
+      "effective_priority": 7,
+      "primary_driver": "Department Risk",
+      "factors": [
+        "Base Criticality: 3/5",
+        "Engineering Dept Risk Weight (1.20x)"
+      ],
+      "summary": "Task E3 (Engineering) assigned ML Priority 7.50 driven by Base Criticality: 3/5"
+    },
+    {
+      "task_id": "T2",
+      "ml_priority_score": 5.75,
+      "effective_priority": 6,
+      "primary_driver": "Department Risk",
+      "factors": [
+        "Base Criticality: 2/5",
+        "TRD Dept Risk Weight (1.30x)"
+      ],
+      "summary": "Task T2 (TRD) assigned ML Priority 5.75 driven by Base Criticality: 2/5"
+    },
+    {
+      "task_id": "E4",
+      "ml_priority_score": 5.75,
+      "effective_priority": 6,
+      "primary_driver": "Department Risk",
+      "factors": [
+        "Base Criticality: 2/5",
+        "Engineering Dept Risk Weight (1.20x)"
+      ],
+      "summary": "Task E4 (Engineering) assigned ML Priority 5.75 driven by Base Criticality: 2/5"
+    },
+    {
+      "task_id": "S3",
+      "ml_priority_score": 4.09,
+      "effective_priority": 4,
+      "primary_driver": "Department Risk",
+      "factors": [
+        "Base Criticality: 1/5",
+        "S&T Dept Risk Weight (1.10x)"
+      ],
+      "summary": "Task S3 (S&T) assigned ML Priority 4.09 driven by Base Criticality: 1/5"
+    }
+  ]
+}
