@@ -45,6 +45,9 @@ python3 -m venv venv
 ./start.sh
 ```
 
+> [!WARNING]
+> `start.sh` enables `BLOCKSYNC_DEMO_MODE=true` and is intended for local evaluation only. A deployed copy must not use `start.sh`.
+
 *(You can also run `npm run start:all` from inside `frontend/`)*
 
 ---
