@@ -781,31 +781,43 @@ export default function App() {
       new_end_minute: decisionForm.action === 'modified' ? calculatedEnd : undefined
     };
 
-    try {
-      const res = await fetch(`${API_BASE}/decisions`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      if (res.ok) {
-        setDecisionMessage({
-          type: 'success',
-          text: decisionForm.action === 'modified'
-            ? `Task ${decisionForm.taskId} schedule MODIFIED to ${winId} (${formatMinutes(decisionForm.startMinute)}–${formatMinutes(calculatedEnd)}). Updated in live Gantt & Audit Log.`
-            : `Action '${decisionForm.action.toUpperCase()}' recorded for Task ${decisionForm.taskId}`
-        });
-        fetchDecisions();
-      } else {
-        throw new Error('Failed to save decision to server');
-      }
-    } catch (err) {
+    const isOfflineSession = Boolean(currentUser?.token?.endsWith('_offline') || !isBackendConnected);
+
+    if (isOfflineSession) {
+      // Offline session: never write to backend audit log
       setDecisions(prev => [payload, ...prev]);
       setDecisionMessage({
         type: 'warning',
-        text: `Backend offline: Action '${decisionForm.action.toUpperCase()}' recorded in local session audit log for Task ${decisionForm.taskId}`
+        text: `Offline demo session: Action '${decisionForm.action.toUpperCase()}' recorded in local session audit log only. Not persisted to backend.`
       });
-    } finally {
       setIsSubmittingDecision(false);
+    } else {
+      try {
+        const res = await fetch(`${API_BASE}/decisions`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+        if (res.ok) {
+          setDecisionMessage({
+            type: 'success',
+            text: decisionForm.action === 'modified'
+              ? `Task ${decisionForm.taskId} schedule MODIFIED to ${winId} (${formatMinutes(decisionForm.startMinute)}–${formatMinutes(calculatedEnd)}). Updated in live Gantt & Audit Log.`
+              : `Action '${decisionForm.action.toUpperCase()}' recorded for Task ${decisionForm.taskId}`
+          });
+          fetchDecisions();
+        } else {
+          throw new Error('Failed to save decision to server');
+        }
+      } catch (err) {
+        setDecisions(prev => [payload, ...prev]);
+        setDecisionMessage({
+          type: 'warning',
+          text: `Backend offline: Action '${decisionForm.action.toUpperCase()}' recorded in local session audit log for Task ${decisionForm.taskId}`
+        });
+      } finally {
+        setIsSubmittingDecision(false);
+      }
     }
 
     // Visibly update the schedule in the UI for modified tasks
@@ -856,6 +868,35 @@ export default function App() {
       due_date: taskForm.due_date,
       description: taskForm.description
     };
+
+    const isOfflineSession = Boolean(currentUser?.token?.endsWith('_offline') || !isBackendConnected);
+
+    if (isOfflineSession) {
+      // Offline session: never write to backend
+      const prefix = userDept === 'Engineering' ? 'E' : (userDept === 'S&T' ? 'S' : 'T');
+      const newId = `${prefix}${data.tasks.length + 1}`;
+      const newTask = {
+        id: newId,
+        department: userDept,
+        section_id: payload.section_id,
+        duration_minutes: payload.duration_minutes,
+        criticality: payload.criticality,
+        due_date: payload.due_date,
+        status: 'pending',
+        description: payload.description
+      };
+      setData(prev => ({
+        ...prev,
+        tasks: [...prev.tasks, newTask]
+      }));
+      setTaskSubmitStatus({
+        type: 'warning',
+        text: `Offline demo session: Request ${newId} recorded locally. Not persisted to backend.`
+      });
+      setIsSubmittingTask(false);
+      setTimeout(() => setTaskSubmitStatus(null), 5000);
+      return;
+    }
 
     try {
       const res = await fetch(`${API_BASE}/tasks`, {
@@ -1020,81 +1061,83 @@ export default function App() {
           </div>
         </header>
 
-        <main className="flex-1 max-w-5xl mx-auto w-full px-6 py-8 flex flex-col md:flex-row gap-8 items-center justify-center">
-          <div className="flex-1 space-y-4 max-w-md">
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-[#0070C0] border border-[#0070C0]/20 rounded-full text-xs font-semibold">
-              <Building2 className="w-3.5 h-3.5" />
-              Role-Based Two-Portal Architecture
-            </div>
-            <h2 className="text-2xl font-bold text-[#1F3864] leading-tight">
-              Maintenance Block Joint Dispatcher
-            </h2>
-
-            <div className="space-y-3 pt-1">
-              {/* Offline Demo Session Disclaimer */}
-              <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium flex items-center gap-2">
-                <AlertCircle className="w-4 h-4 text-[#ED7D31] shrink-0" />
-                <span>Offline demo session. Not authenticated. Nothing is saved.</span>
+        <main className={`flex-1 max-w-5xl mx-auto w-full px-6 py-8 flex flex-col ${!isBackendConnected ? 'md:flex-row' : ''} gap-8 items-center justify-center`}>
+          {!isBackendConnected && (
+            <div className="flex-1 space-y-4 max-w-md">
+              <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-[#0070C0] border border-[#0070C0]/20 rounded-full text-xs font-semibold">
+                <Building2 className="w-3.5 h-3.5" />
+                Offline Role-Based Navigation
               </div>
+              <h2 className="text-2xl font-bold text-[#1F3864] leading-tight">
+                Maintenance Block Joint Dispatcher
+              </h2>
 
-              {/* Group 1: Coordinator Access */}
-              <div className="bg-white p-3.5 rounded-lg border border-[#E2E8F0] space-y-2">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                  <span className="text-xs font-bold text-[#1F3864] flex items-center gap-1.5">
-                    <UserCheck className="w-3.5 h-3.5 text-[#1F3864]" />
-                    Coordinator Access (Divisional Control)
-                  </span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-slate-100 text-[#64748B] rounded-md">
-                    Full Authority
-                  </span>
+              <div className="space-y-3 pt-1">
+                {/* Offline Demo Session Disclaimer */}
+                <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-xs text-amber-900 font-medium flex items-center gap-2">
+                  <AlertCircle className="w-4 h-4 text-[#ED7D31] shrink-0" />
+                  <span>Offline demo session. Not authenticated. Nothing is saved.</span>
                 </div>
-                <button
-                  type="button"
-                  onClick={() => handleSelectDesk(SEEDED_LOGINS[0])}
-                  className="w-full p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 border-l-[#1F3864] border border-[#E2E8F0] rounded-lg transition duration-200 flex items-center justify-between cursor-pointer"
-                >
-                  <div>
-                    <span className="text-xs font-bold text-[#1F3864] block">Chief Coordinator Desk</span>
-                    <span className="text-[11px] text-[#64748B]">Central Traffic Control · Master Schedule &amp; Approvals</span>
+
+                {/* Group 1: Coordinator Access */}
+                <div className="bg-white p-3.5 rounded-lg border border-[#E2E8F0] space-y-2">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-xs font-bold text-[#1F3864] flex items-center gap-1.5">
+                      <UserCheck className="w-3.5 h-3.5 text-[#1F3864]" />
+                      Coordinator Access (Divisional Control)
+                    </span>
+                    <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-slate-100 text-[#64748B] rounded-md">
+                      Full Authority
+                    </span>
                   </div>
-                  <span className="text-[10px] font-mono text-[#0070C0] font-semibold bg-white px-2 py-1 rounded-md border border-[#E2E8F0]">
-                    coordinator_desk
-                  </span>
-                </button>
-              </div>
-
-              {/* Group 2: Department Requester Access */}
-              <div className="bg-white p-3.5 rounded-lg border border-[#E2E8F0] space-y-2">
-                <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
-                  <span className="text-xs font-bold text-[#0070C0] flex items-center gap-1.5">
-                    <Layers className="w-3.5 h-3.5 text-[#0070C0]" />
-                    Department Requester Access (3 Desks)
-                  </span>
-                  <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-sky-50 text-[#0070C0] rounded-md">
-                    Request Submission
-                  </span>
+                  <button
+                    type="button"
+                    onClick={() => handleSelectDesk(SEEDED_LOGINS[0])}
+                    className="w-full p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 border-l-[#1F3864] border border-[#E2E8F0] rounded-lg transition duration-200 flex items-center justify-between cursor-pointer"
+                  >
+                    <div>
+                      <span className="text-xs font-bold text-[#1F3864] block">Chief Coordinator Desk</span>
+                      <span className="text-[11px] text-[#64748B]">Central Traffic Control · Master Schedule &amp; Approvals</span>
+                    </div>
+                    <span className="text-[10px] font-mono text-[#0070C0] font-semibold bg-white px-2 py-1 rounded-md border border-[#E2E8F0]">
+                      Select Desk (Demo)
+                    </span>
+                  </button>
                 </div>
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
-                  {SEEDED_LOGINS.slice(1).map(acc => (
-                    <button
-                      key={acc.username}
-                      type="button"
-                      onClick={() => handleSelectDesk(acc)}
-                      className={`p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 ${acc.color} border border-[#E2E8F0] rounded-lg transition duration-200 cursor-pointer flex flex-col justify-between`}
-                    >
-                      <div>
-                        <span className="text-xs font-bold text-[#1A202C] block">{acc.label}</span>
-                        <span className="text-[10px] text-[#64748B] block">{acc.dept}</span>
-                      </div>
-                      <span className="text-[10px] font-mono text-[#64748B] block mt-1">
-                        {acc.username}
-                      </span>
-                    </button>
-                  ))}
+
+                {/* Group 2: Department Requester Access */}
+                <div className="bg-white p-3.5 rounded-lg border border-[#E2E8F0] space-y-2">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-1.5">
+                    <span className="text-xs font-bold text-[#0070C0] flex items-center gap-1.5">
+                      <Layers className="w-3.5 h-3.5 text-[#0070C0]" />
+                      Department Requester Access (3 Desks)
+                    </span>
+                    <span className="text-[10px] uppercase font-mono px-1.5 py-0.5 bg-sky-50 text-[#0070C0] rounded-md">
+                      Request Submission
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                    {SEEDED_LOGINS.slice(1).map(acc => (
+                      <button
+                        key={acc.username}
+                        type="button"
+                        onClick={() => handleSelectDesk(acc)}
+                        className={`p-2.5 text-left bg-slate-50/70 hover:bg-slate-100 border-l-4 ${acc.color} border border-[#E2E8F0] rounded-lg transition duration-200 cursor-pointer flex flex-col justify-between`}
+                      >
+                        <div>
+                          <span className="text-xs font-bold text-[#1A202C] block">{acc.label}</span>
+                          <span className="text-[10px] text-[#64748B] block">{acc.dept}</span>
+                        </div>
+                        <span className="text-[10px] font-mono text-[#64748B] block mt-1">
+                          Select Desk (Demo)
+                        </span>
+                      </button>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
+          )}
 
           {/* Right Login Card */}
           <div className="w-full max-w-md bg-white border border-[#E2E8F0] rounded-lg p-6">
