@@ -379,7 +379,7 @@ function AboutProjectModal({ isOpen, onClose }) {
               5. Human Controller Sign-Off & Approval Workflow
             </div>
             <div className="p-3 bg-amber-50 border border-amber-200 rounded-lg text-[11px] text-amber-900 leading-relaxed">
-              <strong>BlockSync is a decision support tool — not an autonomous dispatcher.</strong> The CP-SAT solver proposes an optimal schedule, but every block allocation must be formally sanctioned by the Divisional Operations Manager (DOM) or Chief Train Controller (CTC) at Tiruchirappalli before any track possession begins. The Coordinator Authorization tab records this mandatory sign-off with immutable timestamps for operational audit compliance.
+              <strong>BlockSync is a decision support tool — not an autonomous dispatcher.</strong> The CP-SAT solver proposes an optimal schedule, but every block allocation must be formally sanctioned by the Divisional Operations Manager (DOM) or Chief Train Controller (CTC) at Tiruchirappalli before any track possession begins. The Coordinator Authorization tab records this sign-off for operational simulation. Authentication is demo-grade. The login issues signed tokens, but the write endpoints do not currently enforce them.
             </div>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-3">
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
@@ -425,7 +425,7 @@ function AboutProjectModal({ isOpen, onClose }) {
               <div className="p-3 bg-slate-50 rounded-lg border border-slate-200 space-y-1">
                 <span className="font-bold text-[#1F3864] text-xs block">System Verification &amp; Architecture Integrity</span>
                 <p className="text-[11px] text-slate-600">
-                  Decision support engine. All mathematical solver formulations and ML metrics are fully runnable, verifiable, and covered by 17 automated pytest test cases.
+                  Decision support engine. All mathematical solver formulations and ML metrics are fully runnable, verifiable, and covered by 23 automated pytest test cases.
                 </p>
               </div>
             </div>
@@ -436,7 +436,7 @@ function AboutProjectModal({ isOpen, onClose }) {
         {/* Modal Footer */}
         <div className="bg-slate-100 border-t border-slate-200 px-6 py-3 flex items-center justify-between text-xs shrink-0">
           <span className="text-slate-500 font-medium">
-            BlockSync · Southern Railway TPJ Division · 17 Automated Tests Passing
+            BlockSync · Southern Railway TPJ Division · 23 Automated Tests Passing
           </span>
           <button
             onClick={onClose}
@@ -1066,7 +1066,7 @@ export default function App() {
             <div className="flex-1 space-y-4 max-w-md">
               <div className="inline-flex items-center gap-1.5 px-3 py-1 bg-sky-50 text-[#0070C0] border border-[#0070C0]/20 rounded-full text-xs font-semibold">
                 <Building2 className="w-3.5 h-3.5" />
-                Offline Role-Based Navigation
+                Offline Desk Navigation
               </div>
               <h2 className="text-2xl font-bold text-[#1F3864] leading-tight">
                 Maintenance Block Joint Dispatcher
@@ -1205,7 +1205,7 @@ export default function App() {
             </form>
 
             <div className="mt-4 pt-3 border-t border-slate-100 text-[11px] text-[#64748B] text-center">
-              Secured with bcrypt password hashing &amp; signed JWT tokens · Indian Railways TPJ Division
+              Authentication is demo-grade. The login issues signed tokens, but the write endpoints do not currently enforce them.
             </div>
           </div>
         </main>

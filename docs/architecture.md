@@ -49,7 +49,7 @@ Requests compete for the same limited resource: a **maintenance block** (a tempo
 - Real integration with BDMS/TMS/SMMS/TDMS/SATSaNG APIs.
 - Multi-division, zone-wide, or national deployment.
 - Any real Indian Railways data.
-- Authentication, multi-user support, cloud deployment, Docker.
+- Authentication, multi-user support, cloud deployment, Docker. (Authentication is demo-grade. The login issues signed tokens, but the write endpoints do not currently enforce them.)
 
 ---
 

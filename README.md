@@ -100,6 +100,9 @@ npm run dev
 
 BlockSync includes seeded accounts for local evaluation across coordinator and department roles.
 
+> [!NOTE]
+> Authentication is demo-grade. The login issues signed tokens, but the write endpoints do not currently enforce them.
+
 > [!CAUTION]
 > **Security Warning**: Demo mode defaults to **off** (`BLOCKSYNC_DEMO_MODE=false`). **Never enable demo mode in a public or production deployment.** Only enable demo mode locally for offline evaluation. When demo mode is disabled, BlockSync strictly refuses to start unless `PYJWT_SECRET` is explicitly configured.
 
@@ -192,7 +195,7 @@ In the interest of full technical integrity and transparency:
 3. **ML Priority Scope**: The Random Forest regressor is trained on synthetic urgency labels generated from a documented engineering formula; its $R^2 \approx 0.99$ reflects exact model fidelity to that heuristic formula rather than real-world predictive accuracy.
 4. **Baseline vs. Optimized Scenario**: Before/after improvement metrics (e.g. 44% block reduction) reflect performance against one synthetic 9-task scenario.
 5. **Planning Horizon**: A rolling 7-day shift planning horizon is supported; monthly long-range capital renewal planning is out of scope.
-6. **Demo-Grade Authentication**: The built-in authentication system uses seeded demo accounts for evaluation and is not designed as production identity infrastructure.
+6. **Demo-Grade Authentication**: Authentication is demo-grade. The login issues signed tokens, but the write endpoints do not currently enforce them.
 7. **No Real System Integration**: BlockSync is an independent prototype and does not connect to Indian Railways live enterprise systems (COA, FOIS, or ICMS).
 
 ---
