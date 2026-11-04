@@ -64,6 +64,23 @@ python3 -m venv venv
 
 ---
 
+## 🔌 Offline Operation Modes
+
+BlockSync is engineered to run completely offline without an external internet connection, operating in two modes:
+
+1. **Mode 1: Full Local Run (`./start.sh`)**
+   - Launches both the FastAPI backend and React frontend locally.
+   - All optimization algorithms (Google OR-Tools CP-SAT), ML priority scoring, conflict graph generation, and decision APIs run entirely on your local machine with zero external network access.
+   - Self-hosted Inter and JetBrains Mono Latin font files ensure the UI requires zero CDN or external font requests.
+   - Supports full scheduling, task submission, controller approval, and schedule re-optimization.
+
+2. **Mode 2: Recorded Verified Snapshot (Backend Unreachable)**
+   - When the backend server is stopped or unreachable, the dashboard automatically loads a verified, recorded snapshot (`frontend/src/data/snapshot.json`).
+   - The UI displays the master schedule, timeline Gantt, conflict analysis, and department backlogs without requiring a running backend process.
+   - **Re-optimization needs the backend**: To trigger re-optimization, add new tasks, or sanction schedule modifications, start the local backend using `./start.sh`.
+
+---
+
 ### Manual Step-by-Step Start
 
 #### 1. Install & Run Backend

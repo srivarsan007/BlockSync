@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main, public-release, public-main ]
+    branches: [ main, public-release, public-main, offline-mode ]
   pull_request:
-    branches: [ main, public-release, public-main ]
+    branches: [ main, public-release, public-main, offline-mode ]
 
 jobs:
   backend-test:
