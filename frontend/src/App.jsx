@@ -336,7 +336,7 @@ function AboutProjectModal({ isOpen, onClose }) {
                 </h4>
                 <ul className="list-disc pl-4 space-y-1 text-[11px] text-slate-700">
                   <li>Enforces <strong>hard safety constraints</strong>: TRD power isolation NoOverlap, window boundary containment, mandatory scheduling for criticality ≥ 4.</li>
-                  <li>Maximizes: <code>+10·bundling + 1·priority·x_i − 3·distinct_blocks − 8·overdue_delays</code></li>
+                  <li>Maximizes: <code>+10·bundling + 5·priority·x_i − 3·distinct_blocks − 8·overdue_delays</code></li>
                   <li>Produces a provably optimal or near-optimal solution — fully deterministic and auditable.</li>
                   <li>All decision explanations are derived directly from CP-SAT variable bindings.</li>
                 </ul>
@@ -363,7 +363,7 @@ function AboutProjectModal({ isOpen, onClose }) {
               <div className="p-3 bg-slate-50 border border-slate-200 rounded text-xs space-y-1">
                 <span className="font-bold text-[#1F3864] block">Multi-Objective Optimization Function</span>
                 <div className="font-mono text-[10px] bg-white p-2 rounded border border-slate-200 text-slate-800">
-                  Maximize: +10·Σ(bundling) + 1·Σ(priority·x_i) - 3·Σ(distinct_blocks) - 8·Σ(overdue_delays)
+                  Maximize: +10·Σ(bundling) + 5·Σ(priority·x_i) - 3·Σ(distinct_blocks) - 8·Σ(overdue_delays)
                 </div>
                 <p className="text-[11px] text-slate-600 pt-1">
                   Rewards joint block co-utilization and urgent task execution while penalizing total track closures and project delays.
@@ -2472,7 +2472,7 @@ export default function App() {
                       </div>
                     </div>
                     <div className="p-2.5 bg-white rounded-lg border border-[#E2E8F0] font-mono text-[10px] text-[#1A202C]">
-                      Maximize: +10·Σ(bundling) + 1·Σ(priority·x_i) − 3·Σ(distinct_blocks) − 8·Σ(overdue_delays)
+                      Maximize: +10·Σ(bundling) + 5·Σ(priority·x_i) − 3·Σ(distinct_blocks) − 8·Σ(overdue_delays)
                     </div>
                   </section>
 

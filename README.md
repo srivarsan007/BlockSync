@@ -24,6 +24,18 @@ Constraint-optimization engine (OR-Tools CP-SAT) that jointly schedules railway 
 - **Explainable Decisions**: Translates complex solver assignments into human-readable explanations detailing why tasks were bundled or separated.
 - **Human-in-the-Loop Controller Desk**: Empowers railway traffic controllers to review, approve, modify, or reject solver proposals and issue print-ready sanction sheets.
 
+### CP-SAT Optimization Formulation
+
+BlockSync formulates possession scheduling as a multi-objective Constraint Programming model solved using Google OR-Tools CP-SAT (`optimizer/solver.py`):
+
+$$\text{Maximize} \quad (w_1 \cdot \sum \text{bundled}_{i,j}) + (w_2 \cdot \sum \text{criticality}_i \cdot x_i) - (w_3 \cdot \text{distinct\_blocks}) - (w_4 \cdot \sum \text{delay\_days} \cdot x_i)$$
+
+Exact solver weights:
+- **$w_1 = 10$**: Cross-department bundling synergy bonus.
+- **$w_2 = 5$**: Safety criticality / ML priority score on-time completion reward.
+- **$w_3 = 3$**: Distinct track block possession penalty (minimizes corridor closures).
+- **$w_4 = 8$**: Overdue delay penalty (heavily penalizes delaying overdue or high-risk tasks past deadlines).
+
 ---
 
 ## ⚡ Quick Start
