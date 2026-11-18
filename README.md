@@ -2,7 +2,7 @@
 
 Constraint-optimization engine (OR-Tools CP-SAT) that jointly schedules railway maintenance blocks across Engineering, S&T and TRD, with explainable plans and human approval.
 
-[![Python 3.10+](https://img.shields.io/badge/python-3.10+-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
+[![Python 3.12 or newer](https://img.shields.io/badge/python-3.12+_(pinned_numpy)-3776AB.svg?logo=python&logoColor=white)](https://www.python.org/)
 [![FastAPI](https://img.shields.io/badge/FastAPI-0.100+-009688.svg?logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
 [![React 19](https://img.shields.io/badge/React-19.0-61DAFB.svg?logo=react&logoColor=black)](https://react.dev/)
 [![Google OR-Tools](https://img.shields.io/badge/Solver-OR--Tools%20CP--SAT-4285F4.svg?logo=google&logoColor=white)](https://developers.google.com/optimization)
@@ -42,13 +42,13 @@ Exact solver weights:
 
 ### One-Command Start (macOS & Linux)
 
-Clone and launch both the backend solver and interactive dashboard with a single command:
+Clone and launch both the backend solver and interactive dashboard with a single command (requires **Python 3.12 or newer**; the pinned `numpy` dependency requires it):
 
 ```bash
 git clone https://github.com/srivarsan007/blocksync.git
 cd blocksync
 
-# Set up virtual environment and dependencies once
+# Set up virtual environment and dependencies once (Python 3.12 or newer)
 python3 -m venv venv
 ./venv/bin/pip install -r requirements-dev.txt
 (cd frontend && npm install)
@@ -84,8 +84,11 @@ BlockSync is engineered to run completely offline without an external internet c
 ### Manual Step-by-Step Start
 
 #### 1. Install & Run Backend
+
+Requires **Python 3.12 or newer** (the pinned `numpy` dependency requires it):
+
 ```bash
-# Set up Python virtual environment
+# Set up Python virtual environment (Python 3.12 or newer)
 python3 -m venv venv
 source venv/bin/activate
 
