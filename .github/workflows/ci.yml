@@ -32,7 +32,7 @@ jobs:
 
       - name: Run test suite
         run: |
-          PYTHONPATH=. pytest tests/ -v
+          pytest -v
 
   frontend-build:
     name: Frontend Build (Node.js 20)

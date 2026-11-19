@@ -96,7 +96,7 @@ source venv/bin/activate
 pip install -r requirements-dev.txt
 
 # Run test suite (23 automated unit, integration, security, and snapshot drift tests)
-PYTHONPATH=. venv/bin/pytest tests/ -v
+pytest -v
 
 # Start FastAPI backend server (http://127.0.0.1:8000)
 export BLOCKSYNC_DEMO_MODE=true
